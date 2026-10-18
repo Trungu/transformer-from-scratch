@@ -1,0 +1,37 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing and analysis
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# PyTorch model checkpoints
+*.pt
+*.pth
+*.ckpt
+
+# Training datasets
+data/
+datasets/
+
+# Training outputs
+runs/
+checkpoints/
+logs/
+
+# Environment variables
+.env
+.env.*
+
+# Operating system
+.DS_Store
+Thumbs.db
