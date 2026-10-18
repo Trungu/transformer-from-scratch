@@ -2,7 +2,6 @@ import torch
 import math
 import torch.nn as nn
 
-
 class MultiHeadAttention(nn.Module):
     def __init__(self, count_heads, d_embed):
         super().__init__()
