@@ -10,15 +10,15 @@ class MultiHeadAttention(nn.Module):
         self.d_head = d_embed // count_heads
 
         self.w_q = nn.ParameterList(
-            [nn.Parameter(torch.randn(d_embed, self.d_head)) for _ in range(self.heads)])
+            [nn.Parameter(torch.randn(d_embed, self.d_head) / math.sqrt(d_embed)) for _ in range(self.heads)])
 
         self.w_k = nn.ParameterList(
-                [nn.Parameter(torch.randn(d_embed, self.d_head)) for _ in range(self.heads)])
+                [nn.Parameter(torch.randn(d_embed, self.d_head) / math.sqrt(d_embed)) for _ in range(self.heads)])
 
         self.w_v = nn.ParameterList(
-                [nn.Parameter(torch.randn(d_embed, self.d_head)) for _ in range(self.heads)])
+                [nn.Parameter(torch.randn(d_embed, self.d_head) / math.sqrt(d_embed)) for _ in range(self.heads)])
         
-        self.wO = nn.Parameter(torch.randn(d_embed, d_embed))
+        self.wO = nn.Parameter(torch.randn(d_embed, d_embed) / math.sqrt(d_embed))
 
 
     def forward(self, X):

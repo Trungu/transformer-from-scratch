@@ -1,3 +1,4 @@
+import math
 import torch
 import torch.nn as nn
 
@@ -9,6 +10,9 @@ class FeedForward(nn.Module):
             nn.ReLU(),
             nn.Linear(256, d_embed)
         )
+        for layer in self.fc:
+            if isinstance(layer, nn.Linear):
+                nn.init.normal_(layer.weight, mean=0.0, std=1 / math.sqrt(layer.in_features))
 
     def forward(self, X):
         out = self.fc(X)
