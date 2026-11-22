@@ -25,24 +25,24 @@ class MultiHeadAttention(nn.Module):
         query_vector: list = [torch.matmul(X, w_q) for w_q in self.w_q]
         key_vector: list = [torch.matmul(X, w_k) for w_k in self.w_k]
         value_vector: list = [torch.matmul(X, w_v) for w_v in self.w_v]
-        T: int = X.size(0)
+        T: int = X.size(-2)
 
         head_outputs = [self.__attention(query_vector[i], key_vector[i], value_vector[i], T) for i in range(self.heads)]
-        attention_concat = torch.cat(head_outputs, dim=1)
+        attention_concat = torch.cat(head_outputs, dim=-1)
 
         return torch.matmul(attention_concat, self.wO)
 
 
     def __attention(self, q_i, k_i, v_i, T):
-        scaled_dot_product = torch.matmul(q_i, k_i.T) / math.sqrt(self.d_head)
+        scaled_dot_product = torch.matmul(q_i, k_i.transpose(-2, -1)) / math.sqrt(self.d_head)
 
         mask = torch.triu(
-            torch.ones(T, T, dtype=torch.bool),
+            torch.ones(T, T, dtype=torch.bool, device=scaled_dot_product.device),
             diagonal=1
         )
         masked_scores = scaled_dot_product.masked_fill(mask, float("-inf"))
 
-        soft_max = nn.Softmax(dim=1)
+        soft_max = nn.Softmax(dim=-1)
         out = soft_max(masked_scores)
 
         attention_matrix = torch.matmul(out, v_i)

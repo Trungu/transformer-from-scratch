@@ -5,10 +5,11 @@ import torch.nn as nn
 class FeedForward(nn.Module):
     def __init__(self, d_embed):
         super().__init__()
+        self.dff = 4 * d_embed
         self.fc = nn.Sequential(
-            nn.Linear(d_embed, 256),
+            nn.Linear(d_embed, self.dff),
             nn.ReLU(),
-            nn.Linear(256, d_embed)
+            nn.Linear(self.dff, d_embed)
         )
         for layer in self.fc:
             if isinstance(layer, nn.Linear):
@@ -27,8 +28,8 @@ class LayerNorm(nn.Module):
         self.eps = eps
 
     def forward(self,x):
-        mean = torch.mean(x, dim=1, keepdim=True)
-        variance = torch.var(x, dim=1, keepdim=True, correction=0)
+        mean = torch.mean(x, dim=-1, keepdim=True)
+        variance = torch.var(x, dim=-1, keepdim=True, correction=0)
 
         return ((x - mean) / torch.sqrt(variance + self.eps)) * self.gamma + self.beta
 

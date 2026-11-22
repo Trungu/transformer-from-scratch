@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from attention import MultiHeadAttention
-from layers import LayerNorm, FeedForward
+from .attention import MultiHeadAttention
+from .layers import LayerNorm, FeedForward
 
 class TransformerBlock(nn.Module):
     def __init__(self, num_heads, d_embed):

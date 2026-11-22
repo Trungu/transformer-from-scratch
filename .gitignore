@@ -35,3 +35,6 @@ logs/
 # Operating system
 .DS_Store
 Thumbs.db
+
+# Misc
+development_notes.md

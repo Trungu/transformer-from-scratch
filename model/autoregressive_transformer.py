@@ -1,7 +1,7 @@
 import math
 import torch
 import torch.nn as nn
-from transformer import TransformerBlock, LayerNorm
+from .transformer import TransformerBlock, LayerNorm
 
 class AutoRegressiveTransformer(nn.Module):
     def __init__(self, vocab_size, d_embed, num_heads, max_context_length, num_blocks=3):
